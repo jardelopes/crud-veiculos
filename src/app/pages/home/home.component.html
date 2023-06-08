@@ -1,7 +1,8 @@
 <div class="container">
   <div class="d-flex justify-content-between p-4">
     <h1>Lista de Veiculos</h1>
-    <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#adicionarVeiculoModal">Adicionar veiculo</button>
+    <button type="button" class="btn btn-primary" data-bs-toggle="modal"
+      data-bs-target="#adicionarVeiculoModal">Adicionar veiculo</button>
   </div>
 
   <div *ngIf="errorMessage" class="alert alert-danger" role="alert">
@@ -11,105 +12,109 @@
   <div *ngIf="successMessage" class="alert alert-success" role="alert">
     {{ successMessage }}
   </div>
-
-  <table class="table table-hover table-bordered table-responsive-sm">
-    <thead>
-      <tr>
-        <th>Placa</th>
-        <th>Chassi</th>
-        <th>Renavam</th>
-        <th>Modelo</th>
-        <th>Marca</th>
-        <th>Ano</th>
-        <th>Ações</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr *ngFor="let veiculo of $veiculos | async">
-        <td>{{ veiculo.placa }}</td>
-        <td>{{ veiculo.chassi }}</td>
-        <td>{{ veiculo.renavam }}</td>
-        <td>{{ veiculo.modelo }}</td>
-        <td>{{ veiculo.marca }}</td>
-        <td>{{ veiculo.ano }}</td>
-        <td>
-          <div class="d-flex">
-            <div class="px-2">
-              <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#adicionarVeiculoModal" (click)="abrirModalEdicao(veiculo)">Editar</button>
+  <div class="table-responsive-sm">
+    <table class="table table-hover table-bordered ">
+      <thead>
+        <tr>
+          <th>Placa</th>
+          <th>Chassi</th>
+          <th>Renavam</th>
+          <th>Modelo</th>
+          <th>Marca</th>
+          <th>Ano</th>
+          <th>Ações</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let veiculo of $veiculos | async">
+          <td>{{ veiculo.placa }}</td>
+          <td>{{ veiculo.chassi }}</td>
+          <td>{{ veiculo.renavam }}</td>
+          <td>{{ veiculo.modelo }}</td>
+          <td>{{ veiculo.marca }}</td>
+          <td>{{ veiculo.ano }}</td>
+          <td>
+            <div class="d-flex">
+              <div class="px-2">
+                <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#adicionarVeiculoModal"
+                  (click)="abrirModalEdicao(veiculo)">Editar</button>
+              </div>
+              <div>
+                <button class="btn btn-danger" (click)="removerVeiculo(veiculo._id)">Deletar</button>
+              </div>
             </div>
-            <div>
-              <button class="btn btn-danger" (click)="removerVeiculo(veiculo._id)">Deletar</button>
-            </div>
-          </div>
-        </td>
-      </tr>
-    </tbody>
-  </table>
-</div>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+    <div class="table-responsive-sm">
+    </div>
 
-<!-- Modal -->
-<div class="modal fade" id="adicionarVeiculoModal" tabindex="-1" aria-labelledby="adicionarVeiculoModalLabel" aria-hidden="true">
-  <div class="modal-dialog">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h1 class="modal-title fs-5" id="adicionarVeiculoModalLabel">Modal title</h1>
-        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-      </div>
-      <div class="modal-body">
-        <!-- Formulário para preencher as informações do veículo -->
-        <form [formGroup]="veiculoForm" (ngSubmit)="adicionarVeiculo()">
-          <div class="form-group">
-            <label for="placa">Placa</label>
-            <input type="text" class="form-control" id="placa" formControlName="placa">
-            <span class="text-danger"
-            *ngIf="(veiculoForm.controls['placa']['errors']?.['required'] && veiculoForm.controls['placa']['touched'])">campo
-            obrigatório</span>
+    <!-- Modal -->
+    <div class="modal fade" id="adicionarVeiculoModal" tabindex="-1" aria-labelledby="adicionarVeiculoModalLabel"
+      aria-hidden="true">
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h1 class="modal-title fs-5" id="adicionarVeiculoModalLabel">Informações do veículo</h1>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
           </div>
-          <div class="form-group">
-            <label for="chassi">Chassi</label>
-            <input type="text" class="form-control" id="chassi" formControlName="chassi">
-            <span class="text-danger"
-            *ngIf="(veiculoForm.controls['chassi']['errors']?.['required'] && veiculoForm.controls['chassi']['touched'])">campo
-            obrigatório</span>
-          </div>
-          <div class="form-group">
-            <label for="renavam">Renavam</label>
-            <input type="text" class="form-control" id="renavam" formControlName="renavam">
-            <span class="text-danger"
-            *ngIf="(veiculoForm.controls['renavam']['errors']?.['required'] && veiculoForm.controls['renavam']['touched'])">campo
-            obrigatório</span>
-          </div>
-          <div class="form-group">
-            <label for="modelo">Modelo</label>
-            <input type="text" class="form-control" id="modelo" formControlName="modelo">
-            <span class="text-danger"
-            *ngIf="(veiculoForm.controls['modelo']['errors']?.['required'] && veiculoForm.controls['modelo']['touched'])">campo
-            obrigatório</span>
-          </div>
-          <div class="form-group">
-            <label for="marca">Marca</label>
-            <input type="text" class="form-control" id="marca" formControlName="marca">
-            <span class="text-danger"
-            *ngIf="(veiculoForm.controls['marca']['errors']?.['required'] && veiculoForm.controls['marca']['touched'])">campo
-            obrigatório</span>
-          </div>
-          <div class="form-group">
-            <label for="ano">Ano</label>
-            <input type="text" class="form-control" id="ano" formControlName="ano">
-            <span class="text-danger"
-            *ngIf="(veiculoForm.controls['ano']['errors']?.['required'] && veiculoForm.controls['ano']['touched'])">campo
-            obrigatório</span>
-            <span class="text-danger"
-            *ngIf="(veiculoForm.controls['ano']['errors']?.['required'] && veiculoForm.controls['ano']['touched']
+          <div class="modal-body">
+            <!-- Formulário para preencher as informações do veículo -->
+            <form [formGroup]="veiculoForm" (ngSubmit)="adicionarVeiculo()">
+              <div class="form-group">
+                <label for="placa">Placa</label>
+                <input type="text" class="form-control" id="placa" formControlName="placa">
+                <span class="text-danger"
+                  *ngIf="(veiculoForm.controls['placa']['errors']?.['required'] && veiculoForm.controls['placa']['touched'])">campo
+                  obrigatório</span>
+              </div>
+              <div class="form-group">
+                <label for="chassi">Chassi</label>
+                <input type="text" class="form-control" id="chassi" formControlName="chassi">
+                <span class="text-danger"
+                  *ngIf="(veiculoForm.controls['chassi']['errors']?.['required'] && veiculoForm.controls['chassi']['touched'])">campo
+                  obrigatório</span>
+              </div>
+              <div class="form-group">
+                <label for="renavam">Renavam</label>
+                <input type="text" class="form-control" id="renavam" formControlName="renavam">
+                <span class="text-danger"
+                  *ngIf="(veiculoForm.controls['renavam']['errors']?.['required'] && veiculoForm.controls['renavam']['touched'])">campo
+                  obrigatório</span>
+              </div>
+              <div class="form-group">
+                <label for="modelo">Modelo</label>
+                <input type="text" class="form-control" id="modelo" formControlName="modelo">
+                <span class="text-danger"
+                  *ngIf="(veiculoForm.controls['modelo']['errors']?.['required'] && veiculoForm.controls['modelo']['touched'])">campo
+                  obrigatório</span>
+              </div>
+              <div class="form-group">
+                <label for="marca">Marca</label>
+                <input type="text" class="form-control" id="marca" formControlName="marca">
+                <span class="text-danger"
+                  *ngIf="(veiculoForm.controls['marca']['errors']?.['required'] && veiculoForm.controls['marca']['touched'])">campo
+                  obrigatório</span>
+              </div>
+              <div class="form-group">
+                <label for="ano">Ano</label>
+                <input type="text" class="form-control" id="ano" formControlName="ano">
+                <span class="text-danger"
+                  *ngIf="(veiculoForm.controls['ano']['errors']?.['required'] && veiculoForm.controls['ano']['touched'])">campo
+                  obrigatório</span>
+                <span class="text-danger" *ngIf="(veiculoForm.controls['ano']['errors']?.['required'] && veiculoForm.controls['ano']['touched']
             && veiculoForm.controls['ano']['errors']?.['pattern'])">campo deve ser do tipo numero</span>
+              </div>
+            </form>
           </div>
-        </form>
-      </div>
-      <div class="modal-footer">
-        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
-        <button *ngIf="veiculoSelecionado" type="button" class="btn btn-primary" (click)="atualizarVeiculo()" [disabled]="veiculoForm.invalid" data-bs-dismiss="modal">Salvar</button>
-<button *ngIf="!veiculoSelecionado" type="button" class="btn btn-primary" (click)="adicionarVeiculo()" [disabled]="veiculoForm.invalid" data-bs-dismiss="modal">Salvar</button>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+            <button *ngIf="veiculoSelecionado" type="button" class="btn btn-primary" (click)="atualizarVeiculo()"
+              [disabled]="veiculoForm.invalid" data-bs-dismiss="modal">Salvar</button>
+            <button *ngIf="!veiculoSelecionado" type="button" class="btn btn-primary" (click)="adicionarVeiculo()"
+              [disabled]="veiculoForm.invalid" data-bs-dismiss="modal">Salvar</button>
+          </div>
+        </div>
       </div>
     </div>
-  </div>
-</div>
